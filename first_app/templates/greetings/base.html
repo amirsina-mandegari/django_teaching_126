@@ -1,0 +1,13 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'greetings/styles.css' %}">
+<html>
+    <body>
+        <header>
+            <h2>my site header!</h2>
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer><p>the footer</p></footer>
+    </body>
+</html>

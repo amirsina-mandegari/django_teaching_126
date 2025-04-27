@@ -1,0 +1,9 @@
+{% extends 'greetings/base.html' %}
+{% block content %}
+    <h1>my content from {{ username }}</h1>
+    <ul>
+        {% for skill in skills %}
+            <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
