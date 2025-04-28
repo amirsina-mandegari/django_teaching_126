@@ -2,8 +2,8 @@ from django.db import models
 
 
 class PostAuthor(models.Model):
-    first_name = models.TextField()
-    last_name = models.TextField()
+    first_name = models.TextField(null=False, blank=False)
+    last_name = models.TextField(null=False, blank=False)
 
 
 class BlogPost(models.Model):
