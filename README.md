@@ -1,7 +1,3 @@
-Here is the updated README with the "Sessions" section removed:
-
----
-
 # Django Teaching 126 - Python Django Bootcamp
 
 Welcome to the **Django Teaching 126** repository! This repository contains all the code and exercises for the Django Bootcamp, aimed at teaching web development with Django, from basic concepts to advanced topics.
