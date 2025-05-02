@@ -1,0 +1,17 @@
+<!--contact_page.html-->
+<html>
+    <h2>Contact us</h2>
+        {{form.as_p}}
+    <h2> Custom form placement</h2>
+    <div>
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {{ form.name.errors }}
+    </div>
+    <h1> helllo </h1>
+    <div>
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {{ form.email.errors }}
+    </div>
+</html>
