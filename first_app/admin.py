@@ -4,11 +4,14 @@ from first_app.models import BlogPost, Comment, PostAuthor
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    pass
+    list_display=('title', 'is_shown', 'created_at')
+    list_filter=('is_shown','title')
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    pass
+    list_display=('id', 'blog_post', 'author')
+    search_fields=('blog_post__title','author')
+    raw_id_fields = ('blog_post',)
 
 @admin.register(PostAuthor)
 class PostAuthorAdmin(admin.ModelAdmin):
