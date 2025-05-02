@@ -1,4 +1,11 @@
 <html>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     <h2>Contact us</h2>
     <form method="post">
         {% csrf_token %}
