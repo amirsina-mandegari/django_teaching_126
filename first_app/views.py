@@ -16,4 +16,4 @@ def hello_view(request):
 def contact_view(request):
     form = ContactUsForm()
 
-    return render(request, 'contact_page.html', {'form':form})
+    return render(request, 'contact_us.html', {'form':form})
