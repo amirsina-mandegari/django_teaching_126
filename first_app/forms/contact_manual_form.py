@@ -1,7 +1,7 @@
 from django import forms
 
 
-class ContactForm(forms.Form):
+class ContactManualForm(forms.Form):
     name = forms.CharField(max_length=100, required=True)
     email = forms.EmailField(required=True)
     phone_number = forms.CharField(max_length=10)

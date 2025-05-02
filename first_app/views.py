@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 
-from first_app.forms import ContactForm
+from first_app.forms import ContactUsForm
 
 
 def hello_view(request):
@@ -14,6 +14,6 @@ def hello_view(request):
 
 
 def contact_view(request):
-    form = ContactForm()
+    form = ContactUsForm()
 
     return render(request, 'contact_page.html', {'form':form})

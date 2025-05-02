@@ -27,3 +27,10 @@ class Comment(models.Model):
     
     def __str__(self):
         return f"{self.blog_post} {self.id}"
+    
+    
+class ContactUs(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    additional_data = models.CharField(max_length=100, null=True, blank=True)
