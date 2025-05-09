@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 
 class PostAuthor(models.Model):
     first_name = models.TextField(null=False, blank=False)
@@ -13,15 +13,37 @@ class PostAuthor(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
+class BlogPostQueryset(models.QuerySet):
+    def filter_shown(self, **kwargs):
+        return self.filter(is_shown=True, **kwargs)
+    
+    def delete(self, hard_delete=False):
+        if hard_delete is True:
+            return super().delete()
+        return self.update(removed_at=timezone.now())
+    
+    def filter_active(self, **kwargs):
+        return self.filter(removed_at__isnull=True, **kwargs)
+
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=30, unique=True)
     content = models.TextField(null=True, blank=True)
     is_shown = models.BooleanField(default=False)
     created_at = models.DateTimeField()
     authors = models.ManyToManyField(PostAuthor)
+    removed_at = models.DateTimeField(null=True, blank=True)
+
+    objects = BlogPostQueryset.as_manager()
 
     def __str__(self):
         return f"{self.title}"
+    
+    def delete(self, hard_delete=False, *args, **kwargs):
+        if hard_delete is True:
+            return super().delete(*args, **kwargs)
+        self.removed_at = timezone.now()
+        self.save()
 
 
 class Comment(models.Model):
