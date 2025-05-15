@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -12,7 +13,7 @@ def hello_view(request):
     }
     return render(request, 'greetings/home.html', sina)
 
-
+@permission_required('first_app.send_contact_us')
 def contact_view(request):
     print(f"the method is:{request.method}")
     if request.method == 'POST':

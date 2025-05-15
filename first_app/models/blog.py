@@ -36,6 +36,12 @@ class BlogPost(models.Model):
 
     objects = BlogPostQueryset.as_manager()
 
+    class Meta:
+        permissions = [
+            ('can_publish', 'can publish blog post'),
+            ('can_archive', 'can archive blog post')
+        ]
+
     def __str__(self):
         return f"{self.title}"
     
@@ -61,3 +67,7 @@ class ContactUs(models.Model):
     message = models.TextField()
     additional_data = models.CharField(max_length=100, null=True, blank=True)
 
+    class Meta:
+        permissions = [
+            ('send_contact_us', 'can send contact us')
+        ]
