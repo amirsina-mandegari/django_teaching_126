@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_view
 from first_app.urls import urlpatterns as first_app_urls
+from second_app.urls import urlpatterns as second_app_urls 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('first_app/', include(first_app_urls)),
+    path('second_app/', include(second_app_urls)),
     path('login/', auth_view.LoginView.as_view())
 ]
