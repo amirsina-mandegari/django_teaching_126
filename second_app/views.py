@@ -1,6 +1,7 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.contrib.auth import login, authenticate
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib.auth import login, authenticate, logout
 from second_app.forms import LoginCustomForm
 
 def set_color(request):
@@ -76,3 +77,8 @@ def custom_login(request):
     form = LoginCustomForm()
     context = {'form': form}
     return render(request, 'custom_login.html', context=context)
+
+
+def custom_logout(request):
+    logout(request)
+    return redirect('login_page')
