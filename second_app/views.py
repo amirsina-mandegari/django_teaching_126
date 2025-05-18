@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-
+from django.contrib.auth import login, authenticate
 from second_app.forms import LoginCustomForm
 
 def set_color(request):
@@ -55,7 +55,24 @@ def check_request_user_template(request):
 
 def custom_login(request):
     if request.method == 'POST':
-        print('calling post!')
+        form = LoginCustomForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(
+                request=request,
+                username=username,
+                password=password
+                )
+            if user:
+                login(request, user)
+                context = {'form': form, 'custom_message': f'welcome {user.username}'}
+            else:
+                context = {'form': form, 'custom_message': 'wrong data!'}
+        else:
+            context = {'form': form, 'custom_message': 'wrong form!'}
+        return render(request, 'custom_login.html', context=context)
+
     form = LoginCustomForm()
     context = {'form': form}
     return render(request, 'custom_login.html', context=context)
