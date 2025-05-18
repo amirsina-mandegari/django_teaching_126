@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def set_color(request):
@@ -37,3 +38,15 @@ def view_cart(request):
 def empty_cart(request):
     del request.session['cart']
     return HttpResponse("data deleted")
+
+
+def check_request_user(request):
+    user = request.user
+    print(type(user), user.__dict__)
+    return HttpResponse(
+        f"user: {request.user} - {request.user.is_authenticated}"
+    )
+
+
+def check_request_user_template(request):
+    return render(request, 'check_request_user.html')

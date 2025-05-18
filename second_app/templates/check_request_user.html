@@ -1,0 +1,5 @@
+{% if request.user.is_authenticated %}
+    <h2>Welcome {{request.user.username}}</h2>
+{% else %}
+    <h2>Hello guest!</h2>
+{% endif %}

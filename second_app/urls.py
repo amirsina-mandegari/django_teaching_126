@@ -8,5 +8,7 @@ urlpatterns = [
     path('delete_cookie/', views.delete_cookie),
     path('add_to_cart/<int:item_id>/', views.add_to_cart),
     path('view_cart/', views.view_cart),
-    path('empty_cart/', views.empty_cart)
+    path('empty_cart/', views.empty_cart),
+    path('check_request/', views.check_request_user),
+    path('check_request_user_template/', views.check_request_user_template)
 ]
