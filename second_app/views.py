@@ -18,3 +18,22 @@ def delete_cookie(request):
     response = HttpResponse('cookie delete successfully')
     response.delete_cookie('color')
     return response
+
+
+def add_to_cart(request, item_id):
+    cart = request.session.get('cart', [])
+    cart.append(item_id)
+    request.session['cart'] = cart
+    return HttpResponse(f"current cart {cart}")
+
+
+def view_cart(request):
+    sessions = request.session
+    print(sessions, type(sessions), sessions.__dict__)
+    cart = request.session.get('cart', [])
+    return HttpResponse(f"current cart {cart}")
+
+
+def empty_cart(request):
+    del request.session['cart']
+    return HttpResponse("data deleted")
