@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from second_app.forms import LoginCustomForm
 
 def set_color(request):
     response = HttpResponse('set successfully')
@@ -50,3 +51,11 @@ def check_request_user(request):
 
 def check_request_user_template(request):
     return render(request, 'check_request_user.html')
+
+
+def custom_login(request):
+    if request.method == 'POST':
+        print('calling post!')
+    form = LoginCustomForm()
+    context = {'form': form}
+    return render(request, 'custom_login.html', context=context)
