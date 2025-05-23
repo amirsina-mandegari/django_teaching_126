@@ -12,5 +12,6 @@ urlpatterns = [
     path('check_request/', views.check_request_user),
     path('check_request_user_template/', views.check_request_user_template),
     path('login/', views.custom_login, name='login_page'),
-    path('logout/', views.custom_logout)
+    path('logout/', views.custom_logout),
+    path('signup/', views.custom_signup)
 ]

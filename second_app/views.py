@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import UserCreationForm
 from second_app.forms import LoginCustomForm
 
 def set_color(request):
@@ -82,3 +83,14 @@ def custom_login(request):
 def custom_logout(request):
     logout(request)
     return redirect('login_page')
+
+
+def custom_signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login_page')
+    else:
+        form = UserCreationForm()
+    return render(request, 'custom_signup.html', {'form': form})
