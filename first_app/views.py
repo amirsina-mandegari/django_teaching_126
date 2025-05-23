@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from first_app.forms import ContactUsForm
 
-
+@login_required
 def hello_view(request):
     sina = {
         'username' : 'amirsina',
