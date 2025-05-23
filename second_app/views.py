@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
-from second_app.forms import LoginCustomForm
+from second_app.forms import LoginCustomForm, CustomUserCreationForm
 
 def set_color(request):
     response = HttpResponse('set successfully')
@@ -87,10 +87,11 @@ def custom_logout(request):
 
 def custom_signup(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            print(form.cleaned_data)
             return redirect('login_page')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'custom_signup.html', {'form': form})
