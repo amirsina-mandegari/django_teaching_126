@@ -1,0 +1,9 @@
+services:
+  base_flask:
+    image: my_flask_app:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  db:
+    image: redis:7.4.0-alpine
