@@ -1,9 +1,26 @@
+
 services:
-  base_flask:
-    image: my_flask_app:latest
+  db:
+    image: postgres:17.5-alpine
+    ports:
+      - "5430:5432"
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  web:
+    image: django_web:latest
     ports:
       - "8000:8000"
     depends_on:
       - db
-  db:
-    image: redis:7.4.0-alpine
+    environment:
+      - DB_NAME=mydb
+      - DB_USER=myuser
+      - DB_PASSWORD=mypass
+      - DB_HOST=db
+
+volumes:
+  pgdata:
