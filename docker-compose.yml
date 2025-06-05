@@ -2,8 +2,6 @@
 services:
   db:
     image: postgres:17.5-alpine
-    ports:
-      - "5430:5432"
     environment:
       - POSTGRES_DB=mydb
       - POSTGRES_USER=myuser
@@ -16,11 +14,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      - DB_NAME=mydb
-      - DB_USER=myuser
-      - DB_PASSWORD=mypass
-      - DB_HOST=db
+    env_file:
+      - .env
 
 volumes:
   pgdata:
