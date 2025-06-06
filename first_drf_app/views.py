@@ -1,4 +1,5 @@
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from first_drf_app.models import Company
@@ -10,18 +11,17 @@ def hello(request):
     return Response({"message": "hello from DRF!"})
 
 
-@api_view(['GET', 'POST'])
-def company_list(request):
-    if request.method == "GET":
-        company = Company.objects.all().values()
-        return Response(list(company))
+class CompanyListAPIView(APIView):
+    def get(self, request):
+        companies = Company.objects.all()
+        serializer = CompanySerializer(companies, many=True)
+        return Response(serializer.data)
     
-    elif request.method == "POST":
+    def post(self, request):
         serializer = CompanySerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        Company.objects.create(**serializer.data)
+        serializer.save()
         return Response(serializer.data, status=201)
-
 
 @api_view(['GET', 'PATCH', 'DELETE'])
 def company_detail(request, pk):

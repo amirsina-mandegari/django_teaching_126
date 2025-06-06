@@ -1,8 +1,14 @@
 from rest_framework import serializers
+from first_drf_app.models import Company
 
 
-class CompanySerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=100)
-    email = serializers.EmailField()
-    manager_name = serializers.CharField(max_length=100)
-    age = serializers.IntegerField(min_value=0)
+class CompanySerializer(serializers.ModelSerializer):
+    age_in_days = serializers.SerializerMethodField()
+    age_in_month = serializers.IntegerField(read_only=True)
+    
+    class Meta:
+        model = Company
+        exclude = ('id',)
+
+    def get_age_in_days(self, obj):
+        return obj.age * 365
