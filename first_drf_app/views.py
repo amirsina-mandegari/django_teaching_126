@@ -1,9 +1,10 @@
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from first_drf_app.models import Company
-from first_drf_app.serializers import CompanySerializer
+from first_drf_app.serializers import CompanySerializer, CreateCompanySerializer
 
 
 @api_view()
@@ -11,31 +12,50 @@ def hello(request):
     return Response({"message": "hello from DRF!"})
 
 
-class CompanyListAPIView(APIView):
-    def get(self, request):
-        companies = Company.objects.all()
-        serializer = CompanySerializer(companies, many=True)
+class CompanyListAPIView(GenericAPIView):
+    queryset = Company.objects.all()
+    # serializer_class = CompanySerializer
+
+    # def get_queryset(self):
+    #     return Company.objects.filter(age__gt=10)
+    
+    def get_serializer_class(self):
+        print('check for serializer!')
+        if self.request.method == "POST":
+            return CreateCompanySerializer
+        return CompanySerializer
+
+    def get(self, request, *args, **kwargs):
+        companies = self.get_queryset()
+        serializer = self.get_serializer(companies, many=True)
         return Response(serializer.data)
     
     def post(self, request):
-        serializer = CompanySerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=201)
 
-@api_view(['GET', 'PATCH', 'DELETE'])
-def company_detail(request, pk):
-    try:
-        company = Company.objects.get(pk=pk)
-    except Company.DoesNotExist:
-        return Response({'error': 'company not found'}, status=404)
-    if request.method == "GET":
-        return Response({'name': company.name, 'age': company.age})
-    if request.method == 'PATCH':
-        name = request.data.get('name')
-        company.name = name
-        company.save()
-        return Response({"updated": True})
-    if request.method == "DELETE":
+
+class CompanyDetail(GenericAPIView):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'sina'
+
+    def get(self, request, sina):
+        company = self.get_object()
+        serializer = self.get_serializer(company)
+        return Response(serializer.data)
+
+    def patch(self, request, *args, **kwargs):
+        company = self.get_object()
+        serializer = self.get_serializer(instance=company, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def delete(self, request, *args, **kwargs):
+        company = self.get_object()
         company.delete()
-        return Response({'deleted':True})
+        return Response({'deleted': True})

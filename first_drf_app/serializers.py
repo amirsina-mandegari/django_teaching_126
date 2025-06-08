@@ -12,3 +12,9 @@ class CompanySerializer(serializers.ModelSerializer):
 
     def get_age_in_days(self, obj):
         return obj.age * 365
+
+
+class CreateCompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        exclude = ('id', 'employees')
