@@ -1,8 +1,14 @@
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-
+from rest_framework.mixins import (
+    CreateModelMixin,
+    ListModelMixin,
+    RetrieveModelMixin,
+    UpdateModelMixin,
+    DestroyModelMixin
+)
 from first_drf_app.models import Company
 from first_drf_app.serializers import CompanySerializer, CreateCompanySerializer
 
@@ -37,25 +43,10 @@ class CompanyListAPIView(GenericAPIView):
         return Response(serializer.data, status=201)
 
 
-class CompanyDetail(GenericAPIView):
+class CompanyDetail(
+    RetrieveUpdateDestroyAPIView
+):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'sina'
-
-    def get(self, request, sina):
-        company = self.get_object()
-        serializer = self.get_serializer(company)
-        return Response(serializer.data)
-
-    def patch(self, request, *args, **kwargs):
-        company = self.get_object()
-        serializer = self.get_serializer(instance=company, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
-
-    def delete(self, request, *args, **kwargs):
-        company = self.get_object()
-        company.delete()
-        return Response({'deleted': True})
