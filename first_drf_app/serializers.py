@@ -18,3 +18,9 @@ class CreateCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         exclude = ('id', 'employees')
+
+
+class CompanyEmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ['email']
