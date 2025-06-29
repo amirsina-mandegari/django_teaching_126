@@ -11,13 +11,23 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class CompanySerializer(serializers.ModelSerializer):
     age_in_days = serializers.SerializerMethodField()
     age_in_month = serializers.IntegerField(read_only=True)
-    employees = EmployeeSerializer(many=True)
+    # employees = EmployeeSerializer(many=True,)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['manager_name'] = f"{data['manager_name']}@{data['name']}"
+        return data
+    
+    def to_internal_value(self, data):
+        data['manager_name'] = data['manager_name'].split('@')[0]
+        return super().to_internal_value(data)
     
     class Meta:
         model = Company
         exclude = ('id',)
 
     def get_age_in_days(self, obj):
+        print(self.context)
         return obj.age * 365
 
 

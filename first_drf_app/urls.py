@@ -2,8 +2,9 @@ from django.urls import path
 from first_drf_app import views
 from rest_framework.routers import SimpleRouter, DefaultRouter
 
-router = DefaultRouter()
+router = SimpleRouter()
 router.register('company_model_viewset', views.CompanyModelViewset)
+router.register('employees', views.EmployeeModelViewset)
 
 
 urlpartterns = [

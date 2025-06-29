@@ -9,8 +9,8 @@ from rest_framework.mixins import (
     UpdateModelMixin,
     DestroyModelMixin
 )
-from first_drf_app.models import Company
-from first_drf_app.serializers import CompanySerializer, CreateCompanySerializer, CompanyEmailSerializer
+from first_drf_app.models import Company, Employee
+from first_drf_app.serializers import CompanySerializer, EmployeeSerializer, CreateCompanySerializer, CompanyEmailSerializer
 
 from rest_framework import viewsets
 
@@ -120,3 +120,6 @@ class CompanyModelViewset(viewsets.ModelViewSet):
         ser = self.get_serializer(self.get_queryset(), many=True)
         return Response(ser.data)
 
+class EmployeeModelViewset(viewsets.ModelViewSet):
+    serializer_class = EmployeeSerializer
+    queryset = Employee.objects.all()
