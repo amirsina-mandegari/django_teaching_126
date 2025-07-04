@@ -2,12 +2,16 @@ asgiref==3.8.1
 asttokens==3.0.0
 decorator==5.2.1
 Django==5.2
+django-filter==25.1
 djangorestframework==3.16.0
+drf-yasg==1.21.10
 executing==2.2.0
+inflection==0.5.1
 ipython==9.2.0
 ipython_pygments_lexers==1.1.1
 jedi==0.19.2
 matplotlib-inline==0.1.7
+packaging==25.0
 parso==0.8.4
 pexpect==4.9.0
 prompt_toolkit==3.0.51
@@ -15,7 +19,10 @@ psycopg2-binary==2.9.10
 ptyprocess==0.7.0
 pure_eval==0.2.3
 Pygments==2.19.1
+pytz==2025.2
+PyYAML==6.0.2
 sqlparse==0.5.3
 stack-data==0.6.3
 traitlets==5.14.3
+uritemplate==4.2.0
 wcwidth==0.2.13
