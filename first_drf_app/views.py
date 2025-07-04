@@ -11,9 +11,10 @@ from rest_framework.mixins import (
 )
 from first_drf_app.models import Company, Employee
 from first_drf_app.serializers import CompanySerializer, EmployeeSerializer, CreateCompanySerializer, CompanyEmailSerializer
+from first_drf_app.permissions import CustomIsAuthenticated
 
 from rest_framework import viewsets
-
+from rest_framework.permissions import IsAuthenticated
 
 @api_view()
 def hello(request):
@@ -22,6 +23,7 @@ def hello(request):
 
 class CompanyListAPIView(GenericAPIView):
     queryset = Company.objects.all()
+    permission_classes=[CustomIsAuthenticated]
     # serializer_class = CompanySerializer
 
     # def get_queryset(self):
@@ -34,8 +36,10 @@ class CompanyListAPIView(GenericAPIView):
         return CompanySerializer
 
     def get(self, request, *args, **kwargs):
+        print("enter api")
         companies = self.get_queryset()
         serializer = self.get_serializer(companies, many=True)
+        print("exit api")
         return Response(serializer.data)
     
     def post(self, request):
