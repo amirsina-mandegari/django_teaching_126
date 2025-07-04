@@ -84,6 +84,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+REST_FRAMEWORK = {
+    'SEARCH_PARAM': 'q'
+}
 
 
 # Password validation

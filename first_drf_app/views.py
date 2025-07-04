@@ -16,7 +16,9 @@ from first_drf_app.filter import CompanyFilter
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from django_filters import rest_framework as filters
+from django_filters import rest_framework as dj_filters
+
+from rest_framework import filters
 
 @api_view()
 def hello(request):
@@ -25,8 +27,10 @@ def hello(request):
 
 class CompanyListAPIView(GenericAPIView):
     queryset = Company.objects.all()
-    filter_backends = [filters.DjangoFilterBackend]
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, dj_filters.DjangoFilterBackend]
     filterset_class = CompanyFilter
+    search_fields = ['email', 'name']
+    ordering_fields = ['age']
     # permission_classes=[CustomIsAuthenticated]
     # serializer_class = CompanySerializer
 
