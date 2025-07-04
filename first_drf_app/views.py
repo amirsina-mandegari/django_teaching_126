@@ -12,9 +12,11 @@ from rest_framework.mixins import (
 from first_drf_app.models import Company, Employee
 from first_drf_app.serializers import CompanySerializer, EmployeeSerializer, CreateCompanySerializer, CompanyEmailSerializer
 from first_drf_app.permissions import CustomIsAuthenticated
+from first_drf_app.filter import CompanyFilter
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from django_filters import rest_framework as filters
 
 @api_view()
 def hello(request):
@@ -23,7 +25,9 @@ def hello(request):
 
 class CompanyListAPIView(GenericAPIView):
     queryset = Company.objects.all()
-    permission_classes=[CustomIsAuthenticated]
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_class = CompanyFilter
+    # permission_classes=[CustomIsAuthenticated]
     # serializer_class = CompanySerializer
 
     # def get_queryset(self):
@@ -37,7 +41,7 @@ class CompanyListAPIView(GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         print("enter api")
-        companies = self.get_queryset()
+        companies = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(companies, many=True)
         print("exit api")
         return Response(serializer.data)
@@ -119,7 +123,7 @@ class CompanyModelViewset(viewsets.ModelViewSet):
         return Response({"email":obj.email})
     
 
-    @action(detail=False, url_path='emails', )
+    @action(detail=False, url_path='emails',)
     def email_list(self, request):
         ser = self.get_serializer(self.get_queryset(), many=True)
         return Response(ser.data)
