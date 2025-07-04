@@ -19,6 +19,13 @@ from rest_framework.permissions import IsAuthenticated
 from django_filters import rest_framework as dj_filters
 
 from rest_framework import filters
+from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
+
+class CompanyPagination(PageNumberPagination):
+    page_size=5
+    page_size_query_param = 'page_size'
+    max_page_size=10
+
 
 @api_view()
 def hello(request):
@@ -31,6 +38,7 @@ class CompanyListAPIView(GenericAPIView):
     filterset_class = CompanyFilter
     search_fields = ['email', 'name']
     ordering_fields = ['age']
+    pagination_class = LimitOffsetPagination
     # permission_classes=[CustomIsAuthenticated]
     # serializer_class = CompanySerializer
 
@@ -45,8 +53,12 @@ class CompanyListAPIView(GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         print("enter api")
-        companies = self.filter_queryset(self.get_queryset())
-        serializer = self.get_serializer(companies, many=True)
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
         print("exit api")
         return Response(serializer.data)
     
