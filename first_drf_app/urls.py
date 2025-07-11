@@ -3,8 +3,8 @@ from first_drf_app import views
 from rest_framework.routers import SimpleRouter, DefaultRouter
 
 router = SimpleRouter()
-router.register('company_model_viewset', views.CompanyModelViewset)
-router.register('employees', views.EmployeeModelViewset)
+router.register('company_model_viewset', views.CompanyModelViewset, 'company_model_viewset')
+router.register('employees', views.EmployeeModelViewset, 'em')
 
 
 urlpartterns = [
@@ -30,3 +30,5 @@ urlpartterns = [
     )
 ]
 urlpartterns = urlpartterns + router.urls
+
+#asm:sina1234

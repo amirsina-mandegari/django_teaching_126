@@ -20,6 +20,7 @@ from django_filters import rest_framework as dj_filters
 
 from rest_framework import filters
 from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 
 class CompanyPagination(PageNumberPagination):
     page_size=5
@@ -124,6 +125,7 @@ class CompanyDetailViewset(
 
 
 class CompanyModelViewset(viewsets.ModelViewSet):
+    authentication_classes = [BasicAuthentication]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
     lookup_field = "id"
@@ -144,6 +146,10 @@ class CompanyModelViewset(viewsets.ModelViewSet):
         ser = self.get_serializer(self.get_queryset(), many=True)
         return Response(ser.data)
 
+
 class EmployeeModelViewset(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
+
