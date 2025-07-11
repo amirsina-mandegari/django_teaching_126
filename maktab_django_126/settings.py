@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken',
     'first_app',
     'second_app',
-    'first_drf_app'
+    'first_drf_app',
+    'token_auth'
 ]
 
 MIDDLEWARE = [
