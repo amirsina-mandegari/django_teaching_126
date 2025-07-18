@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from second_app.forms import LoginCustomForm, CustomUserCreationForm
-from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 def set_color(request):
     response = HttpResponse('set successfully')
