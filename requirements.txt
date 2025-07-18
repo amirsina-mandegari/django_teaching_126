@@ -4,6 +4,7 @@ decorator==5.2.1
 Django==5.2
 django-filter==25.1
 djangorestframework==3.16.0
+djangorestframework_simplejwt==5.5.0
 drf-yasg==1.21.10
 executing==2.2.0
 inflection==0.5.1
@@ -19,6 +20,7 @@ psycopg2-binary==2.9.10
 ptyprocess==0.7.0
 pure_eval==0.2.3
 Pygments==2.19.1
+PyJWT==2.9.0
 pytz==2025.2
 PyYAML==6.0.2
 sqlparse==0.5.3

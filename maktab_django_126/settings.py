@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'first_app',
     'second_app',
     'first_drf_app',
