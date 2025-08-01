@@ -23,6 +23,7 @@ Pygments==2.19.1
 PyJWT==2.9.0
 pytz==2025.2
 PyYAML==6.0.2
+redis==6.2.0
 sqlparse==0.5.3
 stack-data==0.6.3
 traitlets==5.14.3
