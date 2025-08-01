@@ -156,3 +156,5 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "second_app.backends.EmailBackend"
 ]
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
