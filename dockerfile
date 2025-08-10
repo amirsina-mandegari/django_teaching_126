@@ -19,6 +19,6 @@ COPY . /app
 COPY --from=builder /venv /venv
 ENV PATH="/venv/bin:$PATH"
 
-ENTRYPOINT [ "python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 
